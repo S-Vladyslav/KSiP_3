@@ -10,7 +10,7 @@ namespace KSiP3
 
         static void Main(string[] args)
         {
-            AlphabetCreate(Text.RawText); // перші символи 0-19
+            AlphabetCreate(Text.RawText); // перші символи 0-9
 
             double p = 2203;
             double q = 3217;
@@ -19,12 +19,12 @@ namespace KSiP3
             Console.WriteLine($"q = {q}");
 
             double n = p * q;
-            double f = (p - 1) * (q - 1);
+            double phi = (p - 1) * (q - 1);
             Console.WriteLine($"n = {n}");
-            Console.WriteLine($"f = {f}");
+            Console.WriteLine($"phi = {phi}");
 
-            double d = FindD(f); //223
-            double e = FindE(d, f);//7
+            double d = FindD(phi); //223
+            double e = FindE(d, phi);//7
 
             Console.WriteLine($"d = {d}");
             Console.WriteLine($"e = {e}");
@@ -41,10 +41,10 @@ namespace KSiP3
         }
 
         #region find
-        static double FindD(double f) // випадкове взаємнопросте, просте, менше за ф
+        static double FindD(double phi) // випадкове взаємнопросте, просте, менше за ф
         {
             var rand = new Random();
-            var randNum = rand.Next((int)Math.Sqrt(f), (int)f);
+            var randNum = rand.Next((int)Math.Sqrt(phi), (int)phi);
 
             double d = 0;
             bool prime;
@@ -68,13 +68,13 @@ namespace KSiP3
             return d;
         }
 
-        static double FindE(double d, double f)
+        static double FindE(double d, double phi)
         {
             double e = 0;
 
             for (e = 0; ; e++)
             {
-                if (((e * d) % f) == 1)
+                if (((e * d) % phi) == 1)
                 {
                     break;
                 }
@@ -91,7 +91,6 @@ namespace KSiP3
 
             foreach (var symbol in rawText)
             {
-                //symbolNumber = symbol;//(int)Alphabet.IndexOf(symbol);
                 symbolNumber = (int)Alphabet.IndexOf(symbol);
                 var C = powerMod(symbolNumber, e, n);
  
@@ -107,7 +106,6 @@ namespace KSiP3
             foreach (double symbol in encryptedMessage)
             {
                 var C = powerMod(symbol, d, n);
-                //decryptedMessage += Convert.ToChar(C);//Alphabet[Convert.ToInt32(C)];
                 decryptedMessage += Alphabet[Convert.ToInt32(C)];
             }
             return decryptedMessage;
